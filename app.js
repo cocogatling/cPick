@@ -1056,38 +1056,4 @@ if (binderRoot){
 	binderRoot.addEventListener('keydown', (e)=>{
 		if (e.key === 'Enter' || e.key === ' ') onBinderActivate(e);
 	});
-<<<<<<< HEAD
-<<<<<<< HEAD
 }
-
-/* ========================================================================== */
-/*                              VIEW FIX                                       */
-/* ========================================================================== */
-
-// Scale-to-fit for tall phones (e.g., 1080×2412). Assumes your whole game is inside #appRoot.
-(function(){
-	const app = document.getElementById('appRoot'); // wrap your whole game in this
-	const DESIGN_W = 1024, DESIGN_H = 768;          // your intended base size; adjust if needed
-
-	function fit(){
-		const vw = window.innerWidth, vh = window.innerHeight;
-		// leave small gutters so iOS bars/gesture areas don’t clip
-		const w = vw * 0.98, h = vh * 0.98;
-		const scale = Math.min(w / DESIGN_W, h / DESIGN_H, 1); // never upscale above 1
-		app.style.transform = `scale(${scale})`;
-		// center horizontally; allow page scroll vertically if needed
-		const scaledW = DESIGN_W * scale;
-		app.style.marginLeft = Math.max(0, (vw - scaledW) / 2) + 'px';
-	}
-
-	window.addEventListener('resize', fit, {passive:true});
-	window.addEventListener('orientationchange', fit, {passive:true});
-	document.addEventListener('DOMContentLoaded', fit);
-	requestAnimationFrame(()=>requestAnimationFrame(fit)); // after first layout
-})();
-=======
-}
->>>>>>> parent of 9c8d1f1 (mobile optimization)
-=======
-}
->>>>>>> parent of 9c8d1f1 (mobile optimization)

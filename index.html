@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 	<title>cPick</title>
 	<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class id="appRoot">
 	<header class="topbar">
 		<div class="wrap">
 			<div class="title">
@@ -57,46 +56,44 @@
 
 	<footer class="wrap footer">
 		<button class="btn secondary" id="openBinder">Open Binder</button>
-        <p>Version 1.45</p>
 	</footer>
 
     <!-- Binder Modal -->
     <div id="binderModal" class="modal hidden" aria-hidden="true">
         <div class="modal-backdrop" data-close="binder"></div>
-        <div class="binderWrap">
-            <div class="binder">
+        <div class="binder">
 
-                <!-- 2‑page spread -->
-                <div class="binder-spread">
+            <!-- 2‑page spread -->
+            <div class="binder-spread">
 
-                    <!-- CENTER SPINE WITH RINGS -->
-                    <div class="binder-spine" aria-hidden="true">
-                        <div class="ring"></div>
-                        <div class="ring"></div>
-                        <div class="ring"></div>
-                        <div class="ring"></div>
-                        <div class="ring"></div>
-                        <div class="ring"></div>
-                        <div class="ring"></div>
-                        <div class="ring"></div>
-                        <div class="ring"></div>
-                        <div class="ring"></div>
-                        <div class="ring"></div>
-                        <div class="ring"></div>
-                        <div class="ring"></div>
-                        <div class="ring"></div>                                                            
-                    </div>
-
-                    <!-- Side buttons -->
-                    <aside class="binder-side">
-                        <button class="sidebtn" id="btnCloseBinder"><span class="key">Q</span> Close Binder</button>
-                        <button class="sidebtn" id="btnPrevPage"><span class="key">A</span> Previous Page</button>
-                        <button class="sidebtn" id="btnNextPage"><span class="key">B</span> Next Page</button>
-                    </aside>
-
-                    <!-- Centered page indicator -->
-                    <div id="volume-label" class="volume-label"></div>
+                <!-- CENTER SPINE WITH RINGS -->
+                <div class="binder-spine" aria-hidden="true">
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>                                                            
                 </div>
+
+                <!-- Side buttons -->
+                <aside class="binder-side">
+                    <button class="sidebtn" id="btnCloseBinder"><span class="key">Q</span> Close Binder</button>
+                    <button class="sidebtn" id="btnPrevPage"><span class="key">A</span> Previous Page</button>
+                    <button class="sidebtn" id="btnNextPage"><span class="key">B</span> Next Page</button>
+                </aside>
+
+                <!-- Centered page indicator -->
+                <div id="volume-label" class="volume-label"></div>
+
             </div>
         </div>
     </div>
@@ -146,6 +143,5 @@
 
 
     <script src="app.js"></script>
-    </div>
 </body>
 </html>
