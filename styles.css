@@ -372,10 +372,10 @@ h1{ font-size:18px; margin:0 }
 .sellModal {
 	z-index: 9999;
 	transform: scale(0.5);     /* shrink to 50% */
-	transform-origin: top center;  /* anchor from the top center */
+	transform-origin:center;  /* anchor from the top center */
 }
 
 .binder {
-	transform: scale(0.7);     /* shrink to 50% */
+	transform: scale(0.8);     /* shrink to 50% */
 	transform-origin: top center;  /* anchor from the top center */
 }
