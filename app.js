@@ -1057,3 +1057,8 @@ if (binderRoot){
 		if (e.key === 'Enter' || e.key === ' ') onBinderActivate(e);
 	});
 }
+
+//remove style
+document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+	link.href = link.href.split("?")[0] + "?v=" + Date.now(); // cache-bust
+});
