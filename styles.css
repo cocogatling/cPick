@@ -369,7 +369,11 @@ h1{ font-size:18px; margin:0 }
 
 #revealModal .stage{ position:relative; z-index:2 }
 
-.sellModal {z-index: 9999;}
+.sellModal {
+	z-index: 9999;
+	transform: scale(0.5);     /* shrink to 50% */
+	transform-origin: top center;  /* anchor from the top center */
+}
 
 .binder {
 	transform: scale(0.5);     /* shrink to 50% */
