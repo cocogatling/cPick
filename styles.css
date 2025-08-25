@@ -415,7 +415,7 @@ body.modal-open{ overflow:hidden; }
 @media (max-width: 1024px) {
 	.binder {
 		transform: scale(0.5);      /* shrink to 75% size */
-		transform-origin: top center; /* keep centered */
+		transform-origin: center; /* keep centered */
 	}
 	/* give room so buttons aren’t cut off */
 	.binderWrap { 
