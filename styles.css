@@ -414,7 +414,7 @@ body.modal-open{ overflow:hidden; }
 /* shrink binder on narrow/tall screens like iPad */
 @media (max-width: 1024px) {
 	.binder {
-		transform: scale(0.5);      /* shrink to 75% size */
+		transform: scale(0.75);      /* shrink to 75% size */
 		transform-origin: center; /* keep centered */
 	}
 	/* give room so buttons aren’t cut off */
