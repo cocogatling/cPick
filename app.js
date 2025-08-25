@@ -1065,7 +1065,7 @@ if (binderRoot){
 // Scale-to-fit for tall phones (e.g., 1080×2412). Assumes your whole game is inside #appRoot.
 (function(){
 	const app = document.getElementById('appRoot'); // wrap your whole game in this
-	const DESIGN_W = 1280, DESIGN_H = 720;          // your intended base size; adjust if needed
+	const DESIGN_W = 2266, DESIGN_H = 1488;          // your intended base size; adjust if needed
 
 	function fit(){
 		const vw = window.innerWidth, vh = window.innerHeight;
