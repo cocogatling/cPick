@@ -174,7 +174,7 @@ h1{ font-size:18px; margin:0 }
 /* Binder centers only the spread; buttons are docked on the right */
 .binder{
 	position:relative; display:flex; justify-content:center;
-	width:100%; max-width:900px; max-height:calc(100vh - 48px);
+	width:100%; max-width:1200px; max-height:calc(100vh - 48px);
 }
 .binder-spread{
 	display:grid; grid-template-columns:1fr auto 1fr; gap:16px; align-items:stretch;
@@ -370,10 +370,3 @@ h1{ font-size:18px; margin:0 }
 #revealModal .stage{ position:relative; z-index:2 }
 
 .sellModal {z-index: 9999;}
-
-/* ---------- Responsive ---------- */
-@media (max-width:900px){
-	.binder-spread{ grid-template-columns:1fr }  /* stack pages */
-	.binder-spine, .binder-spine::before, .ring{ display:none }
-}
-
