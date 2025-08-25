@@ -1056,6 +1056,7 @@ if (binderRoot){
 	binderRoot.addEventListener('keydown', (e)=>{
 		if (e.key === 'Enter' || e.key === ' ') onBinderActivate(e);
 	});
+<<<<<<< HEAD
 }
 
 /* ========================================================================== */
@@ -1083,3 +1084,6 @@ if (binderRoot){
 	document.addEventListener('DOMContentLoaded', fit);
 	requestAnimationFrame(()=>requestAnimationFrame(fit)); // after first layout
 })();
+=======
+}
+>>>>>>> parent of 9c8d1f1 (mobile optimization)

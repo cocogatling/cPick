@@ -392,6 +392,7 @@ h1{ font-size:18px; margin:0 }
 	.binder-spine, .binder-spine::before, .ring{ display:none }
 }
 
+<<<<<<< HEAD
 /* Mobile-friendly defaults */
 :root{ --tap:44px; }
 @media (pointer:coarse){
@@ -443,3 +444,5 @@ body.modal-open{ overflow:hidden; }
 	padding:16px;
 	box-shadow:0 22px 60px rgba(0,0,0,.6);
 }
+=======
+>>>>>>> parent of 9c8d1f1 (mobile optimization)
