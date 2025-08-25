@@ -424,3 +424,22 @@ body.modal-open{ overflow:hidden; }
 		justify-content: center; 
 	}
 }
+
+/* keep modal independent of binder scale */
+.sellOverlay{
+	position:fixed; inset:0; z-index:20000;
+	display:grid; place-items:center;
+}
+
+.sellPanel{
+	width:90vw;                 /* shrink width on tablets */
+	max-width:600px;            /* cap size */
+	max-height:85vh;
+	overflow:auto;
+	background:#0f1320;
+	color:#e8ecff;
+	border:1px solid #232947;
+	border-radius:16px;
+	padding:16px;
+	box-shadow:0 22px 60px rgba(0,0,0,.6);
+}
