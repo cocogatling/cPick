@@ -392,3 +392,28 @@ h1{ font-size:18px; margin:0 }
 	.binder-spine, .binder-spine::before, .ring{ display:none }
 }
 
+/* Mobile-friendly defaults */
+:root{ --tap:44px; }
+@media (pointer:coarse){
+	button, .btn, input, select { min-height:var(--tap); font-size:16px; }
+	*{ -webkit-tap-highlight-color: transparent; }
+	/* soften heavy effects on phones */
+	.blurHeavy{ filter:none !important; }
+}
+
+/* App scales via JS; keep it crisp */
+#appRoot{ transform-origin: top left; will-change: transform; }
+
+/* Prevent overflow on small screens */
+body, html{ height:100%; }
+body.modal-open{ overflow:hidden; }
+.sellOverlay{ position:fixed; inset:0; display:grid; place-items:center; z-index:10000; }
+.sellOverlay::before{ content:""; position:absolute; inset:0; background:rgba(0,0,0,.45); backdrop-filter:blur(4px); }
+.sellPanel{ max-width:720px; width:90vw; max-height:90vh; overflow:auto; border-radius:16px; }
+
+/* Binder tweaks on narrow widths */
+@media (max-width:480px){
+	.sidebar{ display:none; }
+	.toolbar{ gap:8px; flex-wrap:wrap; }
+	.priceChip{ transform:scale(.9); }
+}
