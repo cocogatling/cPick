@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>2D Takoyaki Claw — Fake 3D Prototype</title>
+	<style>
+		:root{
+			--bg:#0b0d12; --panel:#11152a; --ink:#e8ecff; --muted:#9aa3c7; --line:#2a2f45; --accent:#8f7fff;
+		}
+		* { box-sizing:border-box }
+		body {
+			margin:0;
+			background:radial-gradient(circle at center,#1b1f31 0%,#0b0d12 70%);
+			color:var(--ink);
+			font:500 14px/1.5 ui-sans-serif,system-ui,Inter,Arial;
+			display:flex;
+			flex-direction:column;
+			align-items:center;
+			justify-content:center;
+			height:100vh;
+		}
+		.controls {
+			margin-bottom:20px;
+			display:flex;
+			gap:10px;
+			flex-wrap:wrap;
+			justify-content:center;
+		}
+		.controls button {
+			padding:10px 14px;
+			border:1px solid var(--line);
+			background:#0b0f1c;
+			color:var(--ink);
+			border-radius:12px;
+			cursor:pointer;
+		}
+		.controls button.primary {
+			background:linear-gradient(180deg,#6f63ff,#8f7fff);
+			border-color:#6f63ff;
+			color:#0b0d12;
+			font-weight:700;
+		}
+		.stats {
+			margin-top:15px;
+			display:flex;
+			gap:16px;
+			color:var(--muted);
+		}
+		.stat {
+			background:var(--panel);
+			padding:6px 10px;
+			border:1px solid var(--line);
+			border-radius:10px;
+		}
+		.tray {
+			position:relative;
+			width:420px;
+			height:340px;
+			border-radius:50% / 40%;
+			background:radial-gradient(ellipse at center, #14192e 0%, #0b0d12 80%);
+			border:4px solid #333;
+			box-shadow: inset 0 15px 30px rgba(0,0,0,.6), 0 20px 40px rgba(0,0,0,.5);
+			perspective:800px;
+		}
+		.hole {
+			position:absolute;
+			width:54px;
+			height:54px;
+			border-radius:50%;
+			background:radial-gradient(circle at 40% 35%, #0e1224 0%, #05070f 85%);
+			border:2px solid #222;
+			box-shadow: inset 0 6px 10px rgba(0,0,0,.8);
+			display:flex;
+			align-items:center;
+			justify-content:center;
+			transform: rotateX(15deg);
+		}
+		.hole .ball {
+			width:26px;
+			height:26px;
+			border-radius:50%;
+			background:radial-gradient(circle at 30% 30%, #f0c98d 0%, #d9a25f 70%);
+			border:2px solid #6f4f2a;
+			box-shadow: inset -3px -3px 6px rgba(0,0,0,.4);
+		}
+		.hole.prize {
+			outline:3px dashed var(--accent);
+			outline-offset:3px;
+		}
+		.hole.prize::after {
+			content:"PRIZE";
+			position:absolute;
+			top:-16px;
+			font:700 10px/1 ui-sans-serif;
+			color:var(--accent);
+		}
+		.flash { animation:flash .5s ease }
+		@keyframes flash {
+			0% { filter:brightness(1) }
+			40% { filter:brightness(2) }
+			100% { filter:brightness(1) }
+		}
+		.toast {
+			position:fixed;
+			right:16px;
+			bottom:16px;
+			background:#0b0f1c;
+			border:1px solid var(--line);
+			padding:12px 14px;
+			border-radius:12px;
+			color:var(--ink);
+		}
+	</style>
+</head>
+<body>
+	<div class="controls">
+		<button id="drop1" class="primary">Drop Ball</button>
+		<button id="drop10">Drop ×10</button>
+		<button id="reset">Reset</button>
+	</div>
+
+	<div class="tray" id="tray"></div>
+
+	<div class="stats">
+		<div class="stat">Tokens: <b id="tokens">20</b></div>
+		<div class="stat">Wins: <b id="wins">0</b></div>
+		<div class="stat">Plushies: <b id="plush">0</b></div>
+	</div>
+
+	<div id="toast" class="toast" style="display:none"></div>
+
+	<script>
+		const tray = document.getElementById('tray');
+		const el = {
+			tokens: document.getElementById('tokens'),
+			wins: document.getElementById('wins'),
+			plush: document.getElementById('plush'),
+			toast: document.getElementById('toast')
+		};
+
+		const ROWS = [3,4,5,4,3];
+		const GAPX = 70;
+		const GAPY = 55;
+		const CENTERX = 210;
+		const CENTERY = 170;
+		const HOLE = 54;
+		let holes = [];
+		let state = { tokens:20, wins:0, plush:0 };
+
+		function toast(msg) {
+			el.toast.textContent = msg;
+			el.toast.style.display = 'block';
+			clearTimeout(el.toast._t);
+			el.toast._t = setTimeout(()=> el.toast.style.display='none',1200);
+		}
+		function updateStats() {
+			el.tokens.textContent = state.tokens;
+			el.wins.textContent = state.wins;
+			el.plush.textContent = state.plush;
+		}
+
+		function newBoard(){
+			tray.innerHTML = '';
+			holes = [];
+			const prizeRowIdx = 2;
+			const prizeColIdx = Math.floor(ROWS[prizeRowIdx]/2);
+			for(let r=0;r<ROWS.length;r++){
+				const count = ROWS[r];
+				const y = CENTERY + (r-2)*GAPY;
+				const colOffset = (count-1)/2;
+				for(let c=0;c<count;c++){
+					const x = CENTERX + (c-colOffset)*GAPX;
+					const hole = document.createElement('div');
+					hole.className = 'hole' + (r===prizeRowIdx && c===prizeColIdx ? ' prize':'');
+					hole.style.left = `${x - HOLE/2}px`;
+					hole.style.top  = `${y - HOLE/2}px`;
+					tray.appendChild(hole);
+					holes.push(hole);
+				}
+			}
+			updateStats();
+		}
+
+		function dropOnce(){
+			if(state.tokens<=0){ toast('No tokens!'); return; }
+			state.tokens--;
+			const i = Math.floor(Math.random()*holes.length);
+			const hole = holes[i];
+			const ball = document.createElement('div');
+			ball.className='ball';
+			hole.appendChild(ball);
+			if(hole.classList.contains('prize')){ win(hole); }
+			updateStats();
+		}
+
+		function win(hole){
+			state.wins++;
+			state.plush++;
+			hole.classList.add('flash');
+			toast('You won a plush!');
+			setTimeout(()=> newBoard(),600);
+		}
+
+		document.getElementById('drop1').onclick=dropOnce;
+		document.getElementById('drop10').onclick=()=>{ for(let t=0;t<10;t++) setTimeout(dropOnce,t*120); };
+		document.getElementById('reset').onclick=newBoard;
+
+		newBoard();
+	</script>
+</body>
+</html>

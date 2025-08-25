@@ -1,0 +1,394 @@
+:root{
+	--bg:#0b0d12;
+	--panel:#101424;
+	--ink:#e8ecff;
+	--muted:#9aa3c7;
+	--line:#20263e;
+	--accent:#8f7fff;
+	--ok:#45f39a;
+	--warn:#ffb86b;
+}
+
+/* ---------- Base ---------- */
+*{ box-sizing:border-box }
+html,body{ height:100% }
+body{
+	margin:0;
+	background:radial-gradient(1200px 600px at 15% -10%,#1b1f31 0%,#0b0d12 40%);
+	color:var(--ink);
+	font:500 14px/1.45 ui-sans-serif,system-ui,Inter,Arial;
+}
+h1,h2{ font-weight:800; letter-spacing:.2px }
+h1{ font-size:18px; margin:0 }
+
+/* ---------- Layout ---------- */
+.wrap{ width:100%; max-width:1400px; margin:0 auto; padding:16px }
+.grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px }
+@media (max-width:960px){ .grid{ grid-template-columns:1fr } }
+.muted{ color:var(--muted) }
+.mt8{ margin-top:8px } .mt10{ margin-top:10px } .mt16{ margin-top:16px }
+.rule{ border:0; border-top:1px solid var(--line); margin:12px 0 }
+
+/* ---------- Top bar ---------- */
+.topbar{
+	position:sticky; top:0; z-index:50;
+	border-bottom:1px solid var(--line);
+	background:linear-gradient(#0b0d12cc,#0b0d12cc);
+	backdrop-filter:saturate(1.2) blur(6px);
+}
+.topbar .wrap{ display:flex; align-items:center; justify-content:space-between }
+.title{ display:flex; align-items:center; gap:12px }
+.logo{
+	width:36px; height:36px;
+	background:linear-gradient(135deg,#8f7fff,#2de2e6);
+	border-radius:10px; box-shadow:0 6px 20px #8f7fff22;
+}
+.stats{ display:flex; align-items:center; gap:10px; flex-wrap:wrap }
+
+/* ---------- Cards / panels ---------- */
+.card1{
+	background:var(--panel);
+	border:1px solid var(--line);
+	border-radius:14px;
+	padding:14px 16px;
+	box-shadow:0 6px 30px #00000040 inset, 0 2px 0 #0b0f1a;
+	max-width:300px;
+}
+.card{
+	background:var(--panel);
+	border:1px solid var(--line);
+	border-radius:14px;
+	padding:14px 16px;
+	box-shadow:0 6px 30px #00000040 inset, 0 2px 0 #0b0f1a;
+	width:1100px;
+}
+.card1-title{ margin:0; font-size:16px }
+.card-title{ margin:0; font-size:16px }
+
+
+/* ---------- Chips / badges ---------- */
+.chip{
+	display:inline-flex; align-items:center; gap:8px;
+	padding:8px 10px; border:1px solid var(--line);
+	background:#0f1320; border-radius:11px;
+}
+.mono{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace }
+.badge{
+	display:inline-flex; align-items:center;
+	border:1px solid var(--line);
+	padding:6px 10px; border-radius:999px; color:var(--muted); font-weight:600;
+}
+
+/* ---------- Buttons ---------- */
+.btn{
+	padding:10px 12px; border-radius:10px; border:1px solid #2a2f45;
+	background:#151b2f; color:var(--ink); font-weight:700; cursor:pointer;
+	transition:transform .02s ease, box-shadow .2s ease, border-color .2s ease;
+	box-shadow:0 6px 18px #0006;
+}
+.btn:hover{ border-color:#3a4266 }
+.btn:active{ transform:translateY(1px) }
+.btn[disabled]{ opacity:.55; cursor:not-allowed; filter:saturate(.3) }
+.btn.ghost{ background:transparent; border-color:var(--line) }
+.btn.secondary{ background:#0f1320; border-color:#2a2f45 }
+.btn.sm{ padding:6px 10px; font-weight:600 }
+
+/* ---------- Select ---------- */
+.select-label{ display:block; font-weight:700; margin-top:8px }
+.select-wrap{ position:relative }
+.select{
+	width:100%; background:#0f1320; color:var(--ink);
+	border:1px solid var(--line); border-radius:10px;
+	padding:10px 40px 10px 12px; font-weight:600; appearance:none;
+}
+.select:focus{ outline:none; border-color:#3a4266 }
+.select-wrap::after{
+	content:"▾"; position:absolute; right:12px; top:50%; transform:translateY(-50%);
+	pointer-events:none; color:var(--muted); font-weight:800;
+}
+
+/* ---------- Results ---------- */
+/* keep 5-wide grid; let it scroll internally */
+/* Results area layout */
+.roll-grid{
+	display:grid;
+	grid-template-columns:repeat(5, minmax(0,1fr));
+	gap: 14px;
+	align-content:start;
+}
+
+/* Each card tile */
+.card-tile{
+	width:139.5px;
+}
+
+.card-frame{
+	width:139.5px;
+	height:228px;
+	border-radius:10px;
+	overflow:hidden;
+	background:#0e1322;        /* fallback behind transparent PNGs */
+	box-shadow: 0 0 0 1px #2a2f45 inset;
+}
+
+/* Ensure images don't overflow or overlap */
+.card-frame img{
+	width:100%;
+	height:100%;
+	object-fit:contain;         /* or 'cover' if you want full-bleed crop */
+	display:block;
+}
+
+
+/* ---------- Footer ---------- */
+/* Footer center */
+.footer{
+	display:flex;
+	justify-content:center; /* center horizontally */
+	padding:20px 0;
+}
+
+/* Bigger binder button */
+#openBinder{
+	font-size:25px;
+	padding:14px 28px;
+	border-radius:14px;
+}
+
+/* ========================================================================== */
+/*                                B I N D E R                                 */
+/* ========================================================================== */
+
+/* Modal wrapper */
+.modal.hidden{ display:none }
+/* Modal: align binder lower instead of perfectly centered */
+.modal{
+	position:fixed; inset:0; z-index:100;
+	display:flex;
+	align-items:flex-start;   /* stick to top instead of center */
+	justify-content:center;
+	padding-top:80px;         /* push binder down below money bar */
+	padding-bottom:24px;      /* keep some bottom breathing room */
+}
+
+/* Binder centers only the spread; buttons are docked on the right */
+.binder{
+	position:relative; display:flex; justify-content:center;
+	width:100%; max-width:1200px; max-height:calc(100vh - 48px);
+}
+.binder-spread{
+	display:grid; grid-template-columns:1fr auto 1fr; gap:16px; align-items:stretch;
+}
+
+.binder-header span,
+.binder-header .badge,
+.binder-header #collectedCount {
+	color:#ffffff;     /* force white */
+	font-weight:800;   /* make it bold to match title */
+}
+
+/* Right-side shortcut buttons */
+.binder-side{
+	position:absolute; top:10px; right:-160px;
+	display:flex; flex-direction:column; gap:8px; align-items:flex-start;
+}
+.sidebtn{
+	display:flex; align-items:center; gap:8px;
+	padding:10px 12px; border-radius:12px;
+	border:1px solid var(--line); background:#0f1320; color:var(--ink); font-weight:700;
+}
+.sidebtn .key{
+	display:inline-grid; place-items:center; min-width:20px; height:20px; padding:0 6px;
+	border:1px solid #2a2f45; border-radius:6px; font-weight:800; color:var(--muted); background:#0b0f1c;
+}
+
+/* Page frame */
+.binder-page{
+	position:relative; display:flex; flex-direction:column; height:100%;
+	background:#FC79A9; color:#f3f4f8;
+	padding:12px; border-radius:18px;
+	box-shadow:inset 0 0 0 2px #e3e6ee, inset 0 0 30px #00000015;
+}
+.binder-header,.binder-footer{
+	display:flex; align-items:center; justify-content:space-between; padding:4px 6px; font-weight:800;
+}
+/* Binder footer: move page indicator to bottom-right */
+.binder-footer{
+	display:flex;
+	justify-content:flex-end;  /* align content right */
+	align-items:center;
+	padding:4px 6px;
+	font-weight:800;
+}
+
+/* Page sheet (grid area) */
+.sheet{
+	flex:1; min-height:0; margin-bottom:0;
+	background:#0e1222; border:1px solid var(--line); border-radius:14px;
+	padding:12px 10px; box-shadow:inset 0 0 0 1px #1b2138, 0 30px 60px #0006;
+}
+
+/* Rows: 4–4–5 with side bars on row4 */
+.row{ display:grid; gap:10px; margin-bottom:10px }
+.row:last-child{ margin-bottom:0 }
+.row4{ grid-template-columns:8px repeat(4,1fr) 8px }
+.row5{ grid-template-columns:repeat(5,1fr) }
+.row .gap{
+	background:linear-gradient(180deg,transparent 0,#1a1f33 20%,#1a1f33 80%,transparent 100%);
+	border-radius:6px;
+}
+/* Row 1 & 2: flush pockets centered as one block */
+.sheet .row:nth-of-type(1),
+.sheet .row:nth-of-type(2),
+.sheet .row:nth-of-type(3){
+	display:flex;              /* override grid */
+	justify-content:center;    /* center block of pockets */
+	gap:0;                     /* no gaps between pockets */
+	margin-bottom:6px;
+}
+
+/* make sure pockets touch neatly */
+.sheet .row:nth-of-type(1) .slot,
+.sheet .row:nth-of-type(2) .slot,
+.sheet .row:nth-of-type(3) .slot{
+	margin:0 1px;              /* tiny spacing so borders don't double up */
+}
+
+/* Slot is just the pocket now */
+.slot{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+/* your existing sizing is fine */
+.pocket {
+  position: relative;
+  width: 139.5px;
+  height: 228px;
+  background: #0f1320;
+  border: 1px solid #34406e;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pocket.owned { cursor:pointer; position:relative; }
+.pocket.owned > * { pointer-events:none; }
+.pocket.owned:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+
+.card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity .15s ease-in-out;
+}
+
+.card-img.owned { opacity: 1; }
+.peek-img { opacity: 0; }
+.pocket.reveal-on-hover:hover .peek-img { opacity: 1; }
+
+.qty-chip, .price-chip, .foil-chip { position: absolute; z-index: 2; }
+
+/* Chips */
+.price-chip{
+	position:absolute; top:-4px; left:-4px;
+	padding:2px 6px; font-size:12px; font-weight:700;
+	border-radius:999px; font-family:monospace;
+	background:#2b2f48; color:#e8ecff; border:1px solid #3a4266;
+	overflow:hidden;
+}
+.qty-chip{
+	position:absolute; top:-4px; right:-4px;
+	padding:2px 5px; font-size:12qpx; font-weight:700;
+	border-radius:999px;
+	background:#2b2f48; color:#e8ecff; border:1px solid #3a4266;
+}
+/* Sell button placed below pocket */
+.slot .sell{ padding:4px 8px; font-size:11px }
+
+/* Center spine & arch rings */
+.binder-spine{
+	width:40px; position:relative;
+	display:flex; flex-direction:column; align-items:center; justify-content:center;
+	gap:30px;
+}
+.binder-spine::before{
+	content:""; position:absolute; top:0; bottom:0; left:50%;
+	width:6px; transform:translateX(-50%);
+	background:linear-gradient(#c7ccd8,#9aa3c7); border-radius:6px;
+	box-shadow:inset 0 0 0 1px #b3b9c7, 0 0 20px #0003;
+}
+.ring{
+	width:50px; height:25px; border:4px solid #cfd6ea; border-bottom:none;
+	border-radius:50px 50px 0 0; background:transparent; box-shadow:0 4px 10px #0006 inset;
+}
+
+.binder-spread { position: relative; }
+.volume-label{
+	position:absolute; bottom:-40px; left:50%; transform:translateX(-50%);
+	font-size:24px; font-weight:700; color:white;
+	pointer-events:none; user-select:none;
+}
+
+/* Overlay */
+.reveal{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .35s}
+.reveal.show{opacity:1;pointer-events:auto}
+.backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);} /* remove this line to avoid blur */
+.stage{position:relative;display:flex;gap:40px;align-items:center;justify-content:center}
+@keyframes popIn{0%{transform:scale(.8) rotate(-6deg);opacity:0}60%{transform:scale(1.08) rotate(-1deg);opacity:1}100%{transform:scale(1) rotate(0);opacity:1}}
+.cardreveal{border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.5);opacity:0;transform:scale(.8)}
+.cardreveal.show{animation:popIn .9s cubic-bezier(.2,.7,.2,1) forwards}
+
+.artwrap {
+	width: 100%;
+	height: 100%;
+	border-radius: 14px;
+	overflow: hidden;   /* round the main art only */
+}
+
+.cardreveal img.main {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+/* overlay on top, allowed to spill */
+.cardreveal img.overlay{
+	position:absolute; z-index:5;
+	inset:-25%;           /* bleed more than before */
+	width:150%; height:150%;
+	pointer-events:none; border-radius:0; /* no clipping */
+}
+
+/* make sure NO ancestor clips */
+#revealModal, #revealModal .stage, .cardreveal{ overflow:visible; }
+
+#revealModal .stage{ position:relative; z-index:2 }
+
+/* full‑screen overlay */
+.sellOverlay{
+	position:fixed; inset:0; z-index:10000;
+	display:grid; place-items:center;           /* <- centers children */
+}
+.sellOverlay::before{                          /* backdrop */
+	content:""; position:absolute; inset:0;
+	background:rgba(0,0,0,.5); backdrop-filter:blur(6px);
+}
+.sellPanel{
+	position:relative;                          /* not fixed/absolute */
+	max-width:780px; width:min(92vw,780px);
+	background:#0f1320; color:#e8ecff;
+	border:1px solid #232947; border-radius:16px; padding:18px;
+	box-shadow:0 22px 60px rgba(0,0,0,.6);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:900px){
+	.binder-spread{ grid-template-columns:1fr }  /* stack pages */
+	.binder-spine, .binder-spine::before, .ring{ display:none }
+}
+

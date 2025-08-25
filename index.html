@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>cPick</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<header class="topbar">
+		<div class="wrap">
+			<div class="title">
+				<div class="logo"></div>
+				<h1>cPick</h1>
+			</div>
+			<div class="stats">
+				<div class="chip mono">💰 Money: <span id="money">$0.00</span></div>
+				<div class="chip mono">
+					<button class="btn ghost sm" id="settingsBtn">Settings</button>
+                    <button id="resetSave" class="btn sm ghost">Reset Save</button>
+				</div>
+                
+			</div>
+		</div>
+	</header>
+
+	<main class="wrap grid">
+		<section class="card1">
+			<h2 class="card-title">Gacha</h2>
+
+            <label class="select-label" for="boxSelect">Select box</label>
+            <div class="select-wrap mt8">
+                <select id="boxSelect" class="select">
+                    <option value="" selected disabled>Choose a box…</option>
+                </select>
+            </div>
+
+			<div id="packs" class="mt16">
+				<strong>Packs</strong>
+				<div class="controls mt8">
+					<button id="open1" class="btn" >Open 1 Pack (2 cards) | Price: $3</button>
+					<button id="open10" class="btn" >Open 1 Box (10 packs, 20 cards) | Price: $30</button>
+					<button id="clearroll" class="btn ghost">Clear results</button>
+				</div>
+			</div>
+		</section>
+
+		<section class="card">
+			<div class="row">
+				<h2 class="card-title">Roll Log</h2>
+				<span class="badge"><span id="activeBox">Newest first</span></span>
+			</div>
+            <div class="roll-grid" id="rollGrid"></div>
+		</section>
+	</main>
+
+	<footer class="wrap footer">
+		<button class="btn secondary" id="openBinder">Open Binder</button>
+	</footer>
+
+    <!-- Binder Modal -->
+    <div id="binderModal" class="modal hidden" aria-hidden="true">
+        <div class="modal-backdrop" data-close="binder"></div>
+        <div class="binder">
+
+            <!-- 2‑page spread -->
+            <div class="binder-spread">
+
+                <!-- CENTER SPINE WITH RINGS -->
+                <div class="binder-spine" aria-hidden="true">
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>                                                            
+                </div>
+
+                <!-- Side buttons -->
+                <aside class="binder-side">
+                    <button class="sidebtn" id="btnCloseBinder"><span class="key">Q</span> Close Binder</button>
+                    <button class="sidebtn" id="btnPrevPage"><span class="key">A</span> Previous Page</button>
+                    <button class="sidebtn" id="btnNextPage"><span class="key">B</span> Next Page</button>
+                </aside>
+
+                <!-- Centered page indicator -->
+                <div id="volume-label" class="volume-label"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Sell Modal (unchanged except for styling) -->
+    <div id="sellModal" class="modal hidden" aria-hidden="true">
+        <div class="modal-backdrop" data-close="sell"></div>
+        <div class="dialog">
+            <header class="dialog-h">Sell Card</header>
+            <div class="dialog-b">
+                <p class="muted">Placeholder — we’ll wire logic next.</p>
+                <div class="dialog-row">
+                    <label>Quantity</label>
+                    <input id="sellQty" type="number" min="1" value="1">
+                </div>
+                <div class="dialog-row">
+                    <label>Price</label>
+                    <input id="sellPrice" type="number" min="0" step="0.01" value="0.00">
+                </div>
+            </div>
+            <footer class="dialog-f">
+                <button class="btn ghost" id="sellCancel">Cancel</button>
+                <button class="btn" id="sellConfirm">Confirm</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal: Two‑card reveal -->
+    <div id="revealModal" class="reveal hidden" aria-hidden="true" role="dialog">
+        <div class="backdrop"></div>
+        <div class="stage">
+            <div class="cardreveal" id="slot1">
+                <div class="artwrap">
+                    <img class="main" src="" alt="">
+                </div>
+                <img class="overlay" src="images/sparkles_l.gif" alt="">
+            </div>
+
+            <div class="cardreveal" id="slot2">
+                <div class="artwrap">
+                    <img class="main" src="" alt="">
+                </div>
+                <img class="overlay" src="images/sparkles_r.gif" alt="">
+            </div>
+        </div>
+    </div>
+
+
+    <script src="app.js"></script>
+</body>
+</html>
