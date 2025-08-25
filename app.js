@@ -1057,6 +1057,7 @@ if (binderRoot){
 		if (e.key === 'Enter' || e.key === ' ') onBinderActivate(e);
 	});
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 
 /* ========================================================================== */
@@ -1084,6 +1085,9 @@ if (binderRoot){
 	document.addEventListener('DOMContentLoaded', fit);
 	requestAnimationFrame(()=>requestAnimationFrame(fit)); // after first layout
 })();
+=======
+}
+>>>>>>> parent of 9c8d1f1 (mobile optimization)
 =======
 }
 >>>>>>> parent of 9c8d1f1 (mobile optimization)
