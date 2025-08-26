@@ -44,7 +44,7 @@ window.addEventListener('keydown', (e) => {
 	const t = e.target;
 	if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/i.test(t.tagName))) return;
 
-	if (e.key === 'Escape') isBinderOpen() ? closeBinder() : openBinder();
+	if (e.key === 'q') isBinderOpen() ? closeBinder() : openBinder();
 	if (e.key === 'a' || e.key === 'ArrowLeft')  prevSpread?.();
 	if (e.key === 'd' || e.key === 'ArrowRight') nextSpread?.();
 });
