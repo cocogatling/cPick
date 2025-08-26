@@ -13,7 +13,7 @@
 }
 
 /* ========================================================================== */
-/*  PART 1: BASE / LAYOUT / TOP BAR                                           */
+/*  PART 1: BASE / LAYOUT / TOP BAR (responsive)                              */
 /* ========================================================================== */
 
 /* Base */
@@ -21,20 +21,37 @@
 html,body{ height:100% }
 body{
 	margin:0;
-	background:radial-gradient(1200px 600px at 15% -10%,#1b1f31 0%,#0b0d12 40%);
+	background:radial-gradient(
+		clamp(600px, 80vw, 1200px) clamp(300px, 40vh, 600px) at 15% -10%,
+		#1b1f31 0%, #0b0d12 40%
+	);
 	color:var(--ink);
-	font:500 14px/1.45 ui-sans-serif,system-ui,Inter,Arial;
+	font:500 clamp(13px, 1.5vw, 14px)/1.45 ui-sans-serif,system-ui,Inter,Arial;
 }
 h1,h2{ font-weight:800; letter-spacing:.2px }
-h1{ font-size:18px; margin:0 }
+h1{ font-size:clamp(16px, 2vw, 18px); margin:0 }
 
 /* Layout */
-.wrap{ width:100%; max-width:1400px; margin:0 auto; padding:16px }
-.grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px }
+.wrap{
+	width:100%;
+	max-width:clamp(320px, 95vw, 1400px);
+	margin:0 auto;
+	padding:clamp(12px, 2vw, 16px);
+}
+.grid{
+	display:grid;
+	grid-template-columns:1fr 1fr;
+	gap:clamp(8px, 2vw, 16px);
+}
 @media (max-width:960px){ .grid{ grid-template-columns:1fr } }
 .muted{ color:var(--muted) }
-.mt8{ margin-top:8px } .mt10{ margin-top:10px } .mt16{ margin-top:16px }
-.rule{ border:0; border-top:1px solid var(--line); margin:12px 0 }
+.mt8{ margin-top:clamp(6px, 1.2vw, 8px) }
+.mt10{ margin-top:clamp(8px, 1.5vw, 10px) }
+.mt16{ margin-top:clamp(12px, 2vw, 16px) }
+.rule{
+	border:0; border-top:1px solid var(--line);
+	margin:clamp(10px, 1.5vw, 12px) 0;
+}
 
 /* Top bar */
 .topbar{
@@ -44,13 +61,15 @@ h1{ font-size:18px; margin:0 }
 	backdrop-filter:saturate(1.2) blur(6px);
 }
 .topbar .wrap{ display:flex; align-items:center; justify-content:space-between }
-.title{ display:flex; align-items:center; gap:12px }
+.title{ display:flex; align-items:center; gap:clamp(8px, 1.5vw, 12px) }
 .logo{
-	width:36px; height:36px;
+	width:clamp(28px, 4vw, 36px);
+	height:clamp(28px, 4vw, 36px);
 	background:linear-gradient(135deg,#8f7fff,#2de2e6);
-	border-radius:10px; box-shadow:0 6px 20px #8f7fff22;
+	border-radius:clamp(8px, 1.2vw, 10px);
+	box-shadow:0 clamp(4px, 0.6vw, 6px) clamp(16px, 2vw, 20px) #8f7fff22;
 }
-.stats{ display:flex; align-items:center; gap:10px; flex-wrap:wrap }
+.stats{ display:flex; align-items:center; gap:clamp(8px, 1.5vw, 10px); flex-wrap:wrap }
 
 /* ========================================================================== */
 /*  PART 2: CARDS / REVEAL / BUTTONS / RESULTS / FOOTER                       */
@@ -319,4 +338,23 @@ h1{ font-size:18px; margin:0 }
 	z-index:9999;
 	transform:scale(0.5);
 	transform-origin:center;
+}
+/* Overlay centered like the reveal */
+.sellOverlay{
+	position:fixed; inset:0; z-index:1000;
+	display:grid; place-items:center;
+	background:rgba(8,10,18,.55); backdrop-filter:blur(4px) saturate(120%);
+}
+.sellPanel{
+	background:var(--panel); color:var(--ink);
+	border:1px solid var(--line); border-radius:18px; box-shadow:0 28px 90px rgba(0,0,0,.6);
+	width:clamp(280px,92vw,720px); max-height:min(88vh,880px); overflow:auto;
+	padding:22px; font-size:20px; line-height:1.55;
+}
+/* two-col → one-col on small screens */
+.sellBody{display:grid; grid-template-columns:180px 1fr; gap:18px; align-items:center}
+.sellImg{width:180px; border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,.45)}
+@media (max-width:720px){
+	.sellBody{grid-template-columns:1fr}
+	.sellImg{width:min(55vw,220px); margin-inline:auto}
 }

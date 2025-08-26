@@ -991,31 +991,60 @@ function openSellModal(card){
 	const overlay = document.createElement('div');
 	overlay.className = 'sellOverlay';          // fixed, covers viewport
 	overlay.innerHTML = `
-		<div class="backdrop" data-action="cancel"></div>
-		<div class="sellPanel" role="dialog" aria-modal="true">
-			<div class="sellBody">
-				<img class="sellImg" src="${card.img}" alt="">
-				<div class="sellRight">
-					<h3 class="sellTitle">${card.char} — ${card.variant}${card.foil?' (foil)':''}</h3>
-					<div class="kv"><span class="label">Price</span><span class="val">$${card.price.toFixed(2)}</span></div>
-					<div class="kv"><span class="label">You own</span><span class="val">x${owned}</span></div>
-					<div class="controls">
-						<span class="label">Qty to sell</span>
-						<div class="qtyCtrl">
-							<button class="qtyBtn" data-action="minus">−</button>
-							<input class="qtyInput" id="sellQty" type="number" min="1" max="${owned}" value="1" step="1">
-							<button class="qtyBtn" data-action="plus">+</button>
-						</div>
-						<div class="total">Total: <b id="sellTotal">$${card.price.toFixed(2)}</b></div>
+	<div class="backdrop" data-action="cancel"></div>
+
+	<div class="sellPanel" role="dialog" aria-modal="true">
+		<div class="sellBody">
+			<!-- Card image -->
+			<img class="sellImg" src="${card.img}" alt="${card.char} card">
+
+			<!-- Right side content -->
+			<div class="sellRight">
+				<h3 class="sellTitle">
+					${card.char} — ${card.variant}${card.foil ? ' (foil)' : ''}
+				</h3>
+
+				<!-- Key values -->
+				<div class="kv">
+					<span class="label">Price</span>
+					<span class="val">$${card.price.toFixed(2)}</span>
+				</div>
+				<div class="kv">
+					<span class="label">You own</span>
+					<span class="val">x${owned}</span>
+				</div>
+
+				<!-- Quantity controls -->
+				<div class="controls">
+					<label class="label" for="sellQty">Qty to sell</label>
+					<div class="qtyCtrl">
+						<button class="qtyBtn" data-action="minus">−</button>
+						<input
+							id="sellQty"
+							class="qtyInput"
+							type="number"
+							min="1"
+							max="${owned}"
+							value="1"
+							step="1"
+						>
+						<button class="qtyBtn" data-action="plus">+</button>
 					</div>
-					<div class="actions">
-						<button class="btn ghost" data-action="cancel">Cancel</button>
-						<button class="btn success" data-action="confirm">Confirm Sell</button>
-						<button class="btn success" data-action="sellAllBut1">Sell All But 1</button>
+					<div class="total">
+						Total: <b id="sellTotal">$${card.price.toFixed(2)}</b>
 					</div>
 				</div>
+
+				<!-- Actions -->
+				<div class="actions">
+					<button class="btn ghost" data-action="cancel">Cancel</button>
+					<button class="btn success" data-action="confirm">Confirm Sell</button>
+					<button class="btn success" data-action="sellAllBut1">Sell All But 1</button>
+				</div>
 			</div>
-		</div>`;
+		</div>
+	</div>`;
+
 	document.body.appendChild(overlay);
 
 	// center panel inside binder (not the whole screen)
@@ -1041,13 +1070,23 @@ function openSellModal(card){
 	}
 
 	function sellAllBut1(){
-	const q = clamp(qty.value);
-	binder[card.id] = (binder[card.id]||0) - q;
-	if (binder[card.id] <= 0) delete binder[card.id];
-	localStorage.setItem('cpick_binder', JSON.stringify(binder));
-	earn(card.price * q); // your money func
-	renderSpread();
-	close();
+		const owned = binder[card.id] || 0;
+		if (owned <= 1) {
+			// nothing to sell, just close
+			close();
+			return;
+		}
+		// number of cards to sell
+		const q = owned - 1;
+		// update binder (leave 1 copy)
+		binder[card.id] = 1;
+		// save state
+		localStorage.setItem('cpick_binder', JSON.stringify(binder));
+		// add money
+		earn(card.price * q);
+		// re-render binder and close modal
+		renderSpread();
+		close();
 	}
 
 	// backdrop click closes
@@ -1059,6 +1098,7 @@ function openSellModal(card){
 			case 'plus':  qty.value = clamp(+qty.value+1); update(); break;
 			case 'cancel': close(); break;
 			case 'confirm': confirm(); break;
+			case 'sellAllBut1': sellAllBut1(); break;
 		}
 	});
 	document.addEventListener('keydown', function onEsc(e){
