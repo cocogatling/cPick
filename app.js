@@ -75,7 +75,7 @@ if (foil) {
 } else if (variant === "trained") {
 	price = PRICE_TRAINED[tier];
 }
-else {
+else if (variant === "tkt"){
     price = PRICE_TKT;
 }
 
