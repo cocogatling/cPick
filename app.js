@@ -1011,6 +1011,7 @@ function openSellModal(card){
 					<div class="actions">
 						<button class="btn ghost" data-action="cancel">Cancel</button>
 						<button class="btn success" data-action="confirm">Confirm Sell</button>
+						<button class="btn success" data-action="sellAllBut1">Sell All But 1</button>
 					</div>
 				</div>
 			</div>
@@ -1037,6 +1038,16 @@ function openSellModal(card){
 		earn(card.price * q); // your money func
         renderSpread();
 		close();
+	}
+
+	function sellAllBut1(){
+	const q = clamp(qty.value);
+	binder[card.id] = (binder[card.id]||0) - q;
+	if (binder[card.id] <= 0) delete binder[card.id];
+	localStorage.setItem('cpick_binder', JSON.stringify(binder));
+	earn(card.price * q); // your money func
+	renderSpread();
+	close();
 	}
 
 	// backdrop click closes
