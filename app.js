@@ -55,6 +55,8 @@ const CHAR_TIER = {
 const PRICE_UNTRAINED = 0.90;
 const PRICE_TRAINED   = { 1:1.00, 2:2.00, 3:2.50 };
 const PRICE_FOIL      = { 1:5.00, 2:9.00, 3:16.00 };
+const PRICE_TKT = 3;
+
 
 function parseCardFile(filename){
   const clean   = filename.replace(/\.(png|jpg)$/i, "");
@@ -68,11 +70,15 @@ function parseCardFile(filename){
   const foil = variant.includes("foil");
 
 let price = PRICE_UNTRAINED;
-if (foil || variant === "tkt") {
+if (foil) {
 	price = PRICE_FOIL[tier];
 } else if (variant === "trained") {
 	price = PRICE_TRAINED[tier];
 }
+else {
+    price = PRICE_TKT;
+}
+
 
 return {
 // now includes volume in the ID → "1A_12_untrained"
@@ -508,7 +514,7 @@ document.getElementById("resetSave").addEventListener("click", () => {
 
     localStorage.removeItem(MONEY_KEY);
 		// later: also remove binder storage keysq
-		money = 30;
+		money = 27;
 		saveMoney();
 		updateMoneyUI();
         resetSave();
@@ -524,7 +530,7 @@ let money = parseFloat(localStorage.getItem(MONEY_KEY));
 
 // If nothing saved, start at $30
 if (isNaN(money)) {
-	money = 30;
+	money = 27;
 	localStorage.setItem(MONEY_KEY, money); // save it immediately
 }
 
@@ -563,7 +569,7 @@ const open1Btn = document.getElementById("open1");
 const open10Btn = document.getElementById("open10");
 
 open1Btn.addEventListener("click", () => {
-	if (spend(3)) {
+	if (spend(2.70)) {
 		console.log("Opened 1 pack (2 cards)");
 		openPacks(1);
 	} else {
@@ -572,7 +578,7 @@ open1Btn.addEventListener("click", () => {
 });
 
 open10Btn.addEventListener("click", () => {
-	if (spend(30)) {
+	if (spend(27)) {
 		console.log("Opened 1 box (10 packs, 20 cards)");
         openPacks(10, { useBox:true })
 	} else {
