@@ -38,19 +38,17 @@ h1{ font-size:clamp(16px, 2vw, 18px); margin:0 }
 	margin:0 auto;
 	padding:clamp(12px, 2vw, 16px);
 }
+/* Grid layout: left (controls) + right (roll log) */
 .grid{
 	display:grid;
-	grid-template-columns:1fr 1fr;
-	gap:clamp(8px, 2vw, 16px);
+	grid-template-columns:
+		clamp(260px, 24vw, 340px)   /* left panel */
+		1fr;                        /* right expands fully */
+	gap:0;                          /* no space between left/right */
 }
-@media (max-width:960px){ .grid{ grid-template-columns:1fr } }
-.muted{ color:var(--muted) }
-.mt8{ margin-top:clamp(6px, 1.2vw, 8px) }
-.mt10{ margin-top:clamp(8px, 1.5vw, 10px) }
-.mt16{ margin-top:clamp(12px, 2vw, 16px) }
-.rule{
-	border:0; border-top:1px solid var(--line);
-	margin:clamp(10px, 1.5vw, 12px) 0;
+
+@media (max-width:960px){
+	.grid{ grid-template-columns:1fr }
 }
 
 /* Top bar */
@@ -87,6 +85,37 @@ h1{ font-size:clamp(16px, 2vw, 18px); margin:0 }
 .card1{ max-width:min(100%, 300px) }
 .card{ width:100%; max-width:min(100%, 1100px) }
 .card1-title,.card-title{ margin:0; font-size:clamp(15px, 1.6vw, 16px) }
+/* Right/log panel */
+.card2{
+	background:var(--panel);
+	border:1px solid var(--line);
+	border-radius:clamp(10px, 1.2vw, 14px);
+	padding:clamp(12px, 1.6vw, 16px);
+	box-shadow:0 6px 30px #00000040 inset, 0 2px 0 #0b0f1a;
+
+	width:100%;        /* take all available right space */
+	min-height:60vh;
+
+	display:flex;
+	flex-direction:column;
+}
+
+/* Make cards inside roll log use grid that auto-fills 3–4 across */
+.card2 .scroll{
+	flex:1; min-height:0; overflow:auto;
+
+	display:grid;
+	grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));
+	gap:clamp(12px, 1.6vw, 16px);
+}
+
+/* mobile: full width when stacked */
+@media (max-width:960px){
+	.card2{
+		max-width:100%;
+		min-height:auto;
+	}
+}
 
 /* ---- Chips / badges ---- */
 .chip{
@@ -141,7 +170,7 @@ h1{ font-size:clamp(16px, 2vw, 18px); margin:0 }
 
 .roll-grid{
 	display:grid;
-	grid-template-columns:repeat(auto-fill, minmax(var(--card-w), 1fr)));
+	grid-template-columns:repeat(auto-fill, minmax(var(--card-w), 1fr));
 	gap:clamp(8px, 1.8vw, 14px);
 	align-content:start;
 }
