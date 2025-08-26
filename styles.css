@@ -72,124 +72,119 @@ h1{ font-size:clamp(16px, 2vw, 18px); margin:0 }
 .stats{ display:flex; align-items:center; gap:clamp(8px, 1.5vw, 10px); flex-wrap:wrap }
 
 /* ========================================================================== */
-/*  PART 2: CARDS / REVEAL / BUTTONS / RESULTS / FOOTER                       */
+/*  PART 2: CARDS / REVEAL / BUTTONS / RESULTS / FOOTER (responsive)          */
 /* ========================================================================== */
 
-/* Cards / panels */
-.card1{
-	background:var(--panel);
-	border:1px solid var(--line);
-	border-radius:14px;
-	padding:14px 16px;
-	box-shadow:0 6px 30px #00000040 inset, 0 2px 0 #0b0f1a;
-	max-width:300px;
-}
+/* ---- Cards / panels ---- */
+.card1,
 .card{
 	background:var(--panel);
 	border:1px solid var(--line);
-	border-radius:14px;
-	padding:14px 16px;
+	border-radius:clamp(10px, 1.2vw, 14px);
+	padding:clamp(12px, 1.6vw, 16px);
 	box-shadow:0 6px 30px #00000040 inset, 0 2px 0 #0b0f1a;
-	width:1100px;
 }
-.card1-title{ margin:0; font-size:16px }
-.card-title{ margin:0; font-size:16px }
+.card1{ max-width:min(100%, 300px) }
+.card{ width:100%; max-width:min(100%, 1100px) }
+.card1-title,.card-title{ margin:0; font-size:clamp(15px, 1.6vw, 16px) }
 
-/* Chips / badges */
+/* ---- Chips / badges ---- */
 .chip{
-	display:inline-flex; align-items:center; gap:8px;
-	padding:8px 10px; border:1px solid var(--line);
-	background:#0f1320; border-radius:11px;
+	display:inline-flex; align-items:center; gap:clamp(6px,1.2vw,8px);
+	padding:clamp(6px,1.2vw,8px) clamp(8px,1.6vw,10px);
+	border:1px solid var(--line);
+	background:#0f1320; border-radius:clamp(9px,1.2vw,11px);
 }
 .mono{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace }
 .badge{
 	display:inline-flex; align-items:center;
 	border:1px solid var(--line);
-	padding:6px 10px; border-radius:999px; color:var(--muted); font-weight:600;
+	padding:clamp(4px,.9vw,6px) clamp(8px,1.6vw,10px);
+	border-radius:999px; color:var(--muted); font-weight:600;
 }
 
-/* Buttons */
+/* ---- Buttons ---- */
 .btn{
-	padding:10px 12px; border-radius:10px; border:1px solid #2a2f45;
+	padding:clamp(8px,1.4vw,10px) clamp(10px,1.8vw,12px);
+	border-radius:clamp(8px,1.2vw,10px);
+	border:1px solid #2a2f45;
 	background:#151b2f; color:var(--ink); font-weight:700; cursor:pointer;
 	transition:transform .02s ease, box-shadow .2s ease, border-color .2s ease;
-	box-shadow:0 6px 18px #0006;
+	box-shadow:0 clamp(4px,.9vw,6px) clamp(14px,1.8vw,18px) #0006;
+	font-size:clamp(12px,1.4vw,14px);
 }
 .btn:hover{ border-color:#3a4266 }
 .btn:active{ transform:translateY(1px) }
 .btn[disabled]{ opacity:.55; cursor:not-allowed; filter:saturate(.3) }
 .btn.ghost{ background:transparent; border-color:var(--line) }
 .btn.secondary{ background:#0f1320; border-color:#2a2f45 }
-.btn.sm{ padding:6px 10px; font-weight:600 }
+.btn.sm{ padding:clamp(4px,1.1vw,6px) clamp(8px,1.6vw,10px); font-weight:600 }
 
-/* Select */
-.select-label{ display:block; font-weight:700; margin-top:8px }
+/* ---- Select ---- */
+.select-label{ display:block; font-weight:700; margin-top:clamp(6px,1.2vw,8px) }
 .select-wrap{ position:relative }
 .select{
 	width:100%; background:#0f1320; color:var(--ink);
-	border:1px solid var(--line); border-radius:10px;
-	padding:10px 40px 10px 12px; font-weight:600; appearance:none;
+	border:1px solid var(--line);
+	border-radius:clamp(8px,1.2vw,10px);
+	padding:clamp(8px,1.4vw,10px) clamp(36px,4.2vw,40px) clamp(8px,1.4vw,10px) clamp(10px,1.6vw,12px);
+	font-weight:600; appearance:none;
 }
 .select:focus{ outline:none; border-color:#3a4266 }
 .select-wrap::after{
-	content:"▾"; position:absolute; right:12px; top:50%; transform:translateY(-50%);
+	content:"▾"; position:absolute; right:clamp(10px,1.4vw,12px); top:50%; transform:translateY(-50%);
 	pointer-events:none; color:var(--muted); font-weight:800;
 }
 
-/* Results (roll grid) */
+/* ---- Results grid ---- */
+:root{ --card-w: clamp(90px, 22vw, 139.5px) } /* safe fallback if not already defined */
+
 .roll-grid{
 	display:grid;
-	grid-template-columns:repeat(5, minmax(0,1fr));
-	gap:14px;
+	grid-template-columns:repeat(auto-fill, minmax(var(--card-w), 1fr)));
+	gap:clamp(8px, 1.8vw, 14px);
 	align-content:start;
 }
-.card-tile{ width:139.5px }
+
+.card-tile{ width:var(--card-w) }
+
 .card-frame{
-	width:139.5px;
-	height:228px;
-	border-radius:10px;
+	width:var(--card-w);
+	aspect-ratio: 139.5 / 228;
+	border-radius:clamp(8px,1.2vw,10px);
 	overflow:hidden;
-	background:#0e1322;        /* fallback behind transparent PNGs */
+	background:#0e1322;
 	box-shadow:0 0 0 1px #2a2f45 inset;
 }
-.card-frame img{
-	width:100%; height:100%; object-fit:contain; display:block;
-}
+.card-frame img{ width:100%; height:100%; object-fit:contain; display:block }
 
-/* Footer */
-.footer{
-	display:flex; justify-content:center;
-	padding:20px 0;
-}
+/* ---- Footer ---- */
+.footer{ display:flex; justify-content:center; padding:clamp(14px, 2vw, 20px) 0 }
 #openBinder{
-	font-size:25px; padding:14px 28px; border-radius:14px;
+	font-size:clamp(18px, 2.6vw, 25px);
+	padding:clamp(10px, 2vw, 14px) clamp(16px, 4vw, 28px);
+	border-radius:clamp(10px,1.2vw,14px);
 }
 
-/* Overlay (two-card reveal) */
+/* ---- Overlay (two-card reveal) ---- */
 .reveal{
 	position:fixed; inset:0; z-index:9999;
 	display:grid; place-items:center;
 	opacity:0; pointer-events:none; transition:opacity .35s;
 }
 .reveal.show{ opacity:1; pointer-events:auto }
-.backdrop{
-	position:absolute; inset:0;
-	background:rgba(0,0,0,.55); backdrop-filter:blur(6px); /* remove line to avoid blur */
-}
-.stage{ position:relative; display:flex; gap:40px; align-items:center; justify-content:center }
+.backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.55); backdrop-filter:blur(6px) }
+.stage{ position:relative; display:flex; gap:clamp(20px,5vw,40px); align-items:center; justify-content:center }
 @keyframes popIn{
 	0%{ transform:scale(.8) rotate(-6deg); opacity:0 }
 	60%{ transform:scale(1.08) rotate(-1deg); opacity:1 }
 	100%{ transform:scale(1) rotate(0); opacity:1 }
 }
-.cardreveal{ border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,.5); opacity:0; transform:scale(.8) }
+.cardreveal{ border-radius:clamp(12px,1.6vw,14px); box-shadow:0 12px 40px rgba(0,0,0,.5); opacity:0; transform:scale(.8) }
 .cardreveal.show{ animation:popIn .9s cubic-bezier(.2,.7,.2,1) forwards }
-.artwrap{ width:100%; height:100%; border-radius:14px; overflow:hidden }
+.artwrap{ width:100%; height:100%; border-radius:inherit; overflow:hidden }
 .cardreveal img.main{ width:100%; height:100%; object-fit:cover; display:block }
-.cardreveal img.overlay{
-	position:absolute; z-index:5; inset:-25%; width:150%; height:150%;
-	pointer-events:none; border-radius:0;
-}
+.cardreveal img.overlay{ position:absolute; z-index:5; inset:-25%; width:150%; height:150%; pointer-events:none; border-radius:0 }
 #revealModal, #revealModal .stage, .cardreveal{ overflow:visible }
 #revealModal .stage{ position:relative; z-index:2 }
 
