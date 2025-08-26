@@ -461,7 +461,7 @@ window.addEventListener("keydown", (e) => {
 	const k = e.key.toLowerCase();
 	if (k === "a") prevSpread();
 	if (k === "d") nextSpread();
-	if (k === "='escape'") document.getElementById("btnCloseBinder")?.click();
+	if (k === "escape") document.getElementById("btnCloseBinder")?.click();
 });
 
 document.addEventListener("DOMContentLoaded", renderSpread);
