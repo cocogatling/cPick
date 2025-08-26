@@ -69,6 +69,32 @@ h1{ font-size:clamp(16px, 2vw, 18px); margin:0 }
 }
 .stats{ display:flex; align-items:center; gap:clamp(8px, 1.5vw, 10px); flex-wrap:wrap }
 
+/* Mobile portrait: tighten money / settings / reset buttons */
+@media (max-width: 480px) {
+	.topbar .wrap{ gap:8px }
+
+	/* shrink the logo + title a bit to free space */
+	.logo{ width:28px; height:28px; border-radius:8px }
+	.title h1{ font-size:14px }
+
+	/* compact the right-side controls */
+	.stats{ gap:6px; flex-wrap:nowrap }
+	.stats .btn,
+	.stats .badge{
+		font-size:12px;
+		padding:6px 8px;
+		border-radius:8px;
+		box-shadow:none;
+	}
+
+	/* if your money pill has a class, target it here for extra squeeze */
+	.money, .money-pill{
+		font-size:12px;
+		padding:6px 10px;
+		border-radius:8px;
+	}
+}
+
 /* ========================================================================== */
 /*  PART 2: CARDS / REVEAL / BUTTONS / RESULTS / FOOTER (responsive)          */
 /* ========================================================================== */
